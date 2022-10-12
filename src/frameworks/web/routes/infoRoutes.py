@@ -1,12 +1,12 @@
 from flask import Blueprint, jsonify, request
 import uuid
 
-from user_cases.load_links import links
+from domain.info.app_bussines_rules.use_cases.load_links import links
 
 # Entities
-from models.entities.info_dom import Info_dom
+from domain.info.entreprise_bussines.entities.info_dom import Info_dom
 # Models
-from models.infoModel import InfoModel
+from frameworks.storage.models.infoModel import InfoModel
 
 main = Blueprint('info_blueprint', __name__)
 
@@ -55,11 +55,12 @@ def post_info():
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500
 
-@main.route('/loadLinks', methods=['POST'])
-def post_info():
-    try:
-        links.load_links()
-        print('prueba')
 
-    except Exception as ex:
-        return jsonify({'message': str(ex)}), 500
+# @main.route('/loadLinks', methods=['POST'])
+# def post_info():
+#     try:
+#         links.load_links()
+#         print('prueba')
+
+#     except Exception as ex:
+#         return jsonify({'message': str(ex)}), 500

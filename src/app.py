@@ -1,9 +1,9 @@
 from flask import Flask
 from config import config
-from database.db import create_new_table
+from frameworks.storage.database.db import create_new_table
 
 # Routes
-from routes import infoRoutes
+from frameworks.web.routes import infoRoutes
 
 app = Flask(__name__)
 

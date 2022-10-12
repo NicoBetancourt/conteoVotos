@@ -1,5 +1,5 @@
-from database.db import get_connection
-from .entities.info_dom import Info_dom
+from frameworks.storage.database.db import get_connection
+from domain.info.entreprise_bussines.entities.info_dom import Info_dom
 from decouple import config
 
 table_name = config('TABLE_NAME')
