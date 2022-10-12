@@ -1,0 +1,11 @@
+*__pycache__/
+*.pyc
+env
+bin
+lib
+lib64
+share
+local
+pyvenv.cfg
+.env
+.vscode
