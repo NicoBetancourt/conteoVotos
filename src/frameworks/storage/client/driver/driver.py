@@ -58,7 +58,7 @@ class psql_driver():
             with connection.cursor() as cursor:
 
                 str_query = f"INSERT INTO {table_name} ("+','.join(x for x in Info_dal.headers(
-                ))+") VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+                ))+") VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
 
                 cursor.execute(str_query, (info))
 
@@ -77,7 +77,7 @@ class psql_driver():
 
             with connection.cursor() as cursor:
                 str_query = f"INSERT INTO {table_name} ("+','.join(x for x in Info_dal.headers(
-                ))+") VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+                ))+") VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
 
                 # args_str = ','.join(cursor.mogrify("(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", x) for x in info)
                 # cursor.execute(f"INSERT INTO {table_name} VALUES " + args_str)

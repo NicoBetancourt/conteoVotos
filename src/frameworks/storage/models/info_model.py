@@ -1,10 +1,11 @@
 class Info_dal():
 
-    def __init__(self, id, departamento=None, municipio=None, zona=None, mesa=None, link=None, votos_gustavo=None, votos_ivan=None, votos_blanco=None, 
+    def __init__(self, id, departamento=None, municipio=None, puesto=None, zona=None, mesa=None, link=None, votos_gustavo=None, votos_ivan=None, votos_blanco=None, 
     votos_nulos=None, votos_no_marcados=None, votos_total=None, votos_sufragantes=None, votos_urna=None, votos_incinerados=None, validar_total=None, validar_votantes=None) -> None:
         self.id = id
         self.departamento = departamento
         self.municipio = municipio
+        self.puesto = puesto
         self.zona = zona
         self.mesa = mesa
         self.link = link
@@ -25,6 +26,7 @@ class Info_dal():
         return ['id', 
             'departamento',
             'municipio',
+            'puesto', 
             'zona', 
             'mesa', 
             'link', 

@@ -24,6 +24,7 @@ def create_new_table():
                     id VARCHAR(50),
                     departamento VARCHAR(50),
                     municipio VARCHAR(50),
+                    puesto VARCHAR(50),
                     zona VARCHAR(50),
                     mesa VARCHAR(50),
                     link VARCHAR(150),

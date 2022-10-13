@@ -1,9 +1,10 @@
 class Info_dom():
 
-    def __init__(self, id, departamento=None, municipio=None, zona=None, mesa=None, link=None, votosGustavo=None, votosIvan=None, votosBlanco=None, votosNulos=None, votosNoMarcados=None, votosTotal=None, votosSufragantes=None, votosUrna=None, votosIncinerados=None, validarTotal=None, validarVotantes=None) -> None:
+    def __init__(self, id, departamento=None, municipio=None, puesto=None, zona=None, mesa=None, link=None, votosGustavo=None, votosIvan=None, votosBlanco=None, votosNulos=None, votosNoMarcados=None, votosTotal=None, votosSufragantes=None, votosUrna=None, votosIncinerados=None, validarTotal=None, validarVotantes=None) -> None:
         self.id = id
         self.departamento = departamento
         self.municipio = municipio
+        self.puesto = puesto
         self.zona = zona
         self.mesa = mesa
         self.link = link
@@ -25,6 +26,7 @@ class Info_dom():
             'id': self.id,
             'departamento': self.departamento,
             'municipio': self.municipio,
+            'puesto': self.puesto,
             'zona': self.zona,
             'mesa': self.mesa,
             'link': self.link,
@@ -42,6 +44,6 @@ class Info_dom():
         }
 
     def to_List(self):
-        return [self.id,self.departamento,self.municipio,self.zona,self.mesa, self.link,self.votosGustavo,self.votosIvan,
+        return [self.id,self.departamento,self.municipio,self.puesto,self.zona,self.mesa, self.link,self.votosGustavo,self.votosIvan,
             self.votosBlanco,self.votosNulos,self.votosNoMarcados,self.votosTotal,self.votosSufragantes,self.votosUrna,self.votosIncinerados,
             self.validarTotal,self.validarVotantes]

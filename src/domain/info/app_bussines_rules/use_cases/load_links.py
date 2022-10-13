@@ -62,11 +62,11 @@ class links():
                         for link in soupLinks.findAll('a'):
 
                             info = Info_dom(str(uuid.uuid4(
-                            )), departamento.text, municipio.text, zona.text, mesa.text, link['href'])
+                            )), departamento.text, municipio.text, mesa.text, zona.text, link.text, link['href'])
 
                             arrayInfo.append(info.to_List())
 
-                            if len(arrayInfo) > 1000:
+                            if len(arrayInfo) > 20000:
                                 break
 
                         else:
