@@ -22,24 +22,25 @@ def create_new_table():
     create_table = f"""
                 CREATE TABLE IF NOT EXISTS {table_name} (
                     id VARCHAR(50),
-                    departamento VARCHAR(30),
-                    municipio VARCHAR(30),
-                    zona VARCHAR(5),
-                    mesa VARCHAR(5),
-                    link VARCHAR(5),
-                    votosGustavo SMALLINT,
-                    votosIvan SMALLINT,
-                    votosBlanco SMALLINT,
-                    votosNulos SMALLINT,
-                    votosNoMarcados SMALLINT,
-                    votosTotal INT,
-                    votosSufragantes INT,
-                    votosUrna INT,
-                    votosIncinerados SMALLINT,
-                    validarTotal BOOLEAN,
-                    validarVotantes BOOLEAN
+                    departamento VARCHAR(50),
+                    municipio VARCHAR(50),
+                    zona VARCHAR(50),
+                    mesa VARCHAR(50),
+                    link VARCHAR(150),
+                    votos_gustavo SMALLINT,
+                    votos_ivan SMALLINT,
+                    votos_blanco SMALLINT,
+                    votos_nulos SMALLINT,
+                    votos_no_marcados SMALLINT,
+                    votos_total INT,
+                    votos_sufragantes INT,
+                    votos_urna INT,
+                    votos_incinerados SMALLINT,
+                    validar_total BOOLEAN,
+                    validar_totantes BOOLEAN
                 )
                 """
+
     connection = get_connection()
     cur = connection.cursor()
     cur.execute(create_table)

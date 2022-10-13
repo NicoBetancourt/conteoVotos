@@ -40,3 +40,8 @@ class Info_dom():
             'validarTotal': self.validarTotal,
             'validarVotantes': self.validarVotantes
         }
+
+    def to_List(self):
+        return [self.id,self.departamento,self.municipio,self.zona,self.mesa, self.link,self.votosGustavo,self.votosIvan,
+            self.votosBlanco,self.votosNulos,self.votosNoMarcados,self.votosTotal,self.votosSufragantes,self.votosUrna,self.votosIncinerados,
+            self.validarTotal,self.validarVotantes]

@@ -1,5 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
+import uuid
+
+# Entities
+from domain.info.entreprise_bussines.entities.info_dom import Info_dom
+
 
 class links():
     def load_all_links():
@@ -12,7 +17,6 @@ class links():
         findMesas = 'cambiar_zona'
         findLinks = 'cargar_mesas'
 
-
         def getInfo(url, accion, dep, mun, zona, pues):
             body = dict(accion=accion,
                         dep_activo=dep,
@@ -23,53 +27,59 @@ class links():
             htmlText = requests.post(url, data=body).text
             return htmlText
 
-
         infoDepartamento = getInfo(url, findDepartamentos, '01', '', '', '')
 
         soupDepartamentos = BeautifulSoup(infoDepartamento, "html.parser")
 
-        arrayDepartamentos = []
-        arrayMunicipios = []
-        arrayZonas = []
-        arrayMesas = []
-        arrayLinks = []
+        arrayInfo = []
 
         # Itera cada uno de los departamentos
         for departamento in soupDepartamentos.findAll('a'):
-
-            arrayDepartamentos.append(departamento.text)
             dpto = (departamento['id'][-2:]).replace('_', '0')
             infoMunicipios = getInfo(url, findMunicipios, dpto, '', '', '')
             soupDepartamentos = BeautifulSoup(infoMunicipios, "html.parser")
 
-            print(departamento.text)
-
             # Itera cada uno de los municipios
             for municipio in soupDepartamentos.findAll('option'):
-                arrayMunicipios.append(municipio.text)
-
                 mnpio = ('00'+municipio['value'])[-3:]
                 infoZonas = getInfo(url, findZonas, dpto, mnpio, '', '')
                 soupZonas = BeautifulSoup(infoZonas, "html.parser")
-                print(municipio.text)
 
                 # Itera cada uno de las zonas
                 for zona in soupZonas.findAll('option'):
-                    arrayZonas.append(zona.text)
                     zon = ('0'+zona['value'])[-2:]
                     infoMesas = getInfo(url, findMesas, dpto, mnpio, zon, '')
                     soupMesas = BeautifulSoup(infoMesas, "html.parser")
-                    print(zona.text)
 
                     # Itera cada uno de las mesas
                     for mesa in soupMesas.findAll('option'):
-                        arrayZonas.append(mesa.text)
                         mes = ('0'+mesa['value'])[-2:]
-                        infoLinks = getInfo(url, findLinks, dpto, mnpio, zon, mes)
+                        infoLinks = getInfo(
+                            url, findLinks, dpto, mnpio, zon, mes)
                         soupLinks = BeautifulSoup(infoLinks, "html.parser")
-                        print(mesa.text)
 
                         # Itera cada uno de los links
                         for link in soupLinks.findAll('a'):
-                            arrayLinks.append(link['href'])
-                            print(link['href'])
+
+                            info = Info_dom(str(uuid.uuid4(
+                            )), departamento.text, municipio.text, zona.text, mesa.text, link['href'])
+
+                            arrayInfo.append(info.to_List())
+
+                            if len(arrayInfo) > 1000:
+                                break
+
+                        else:
+                            continue
+                        break
+                    else:
+                        continue
+                    break
+                else:
+                    continue
+                break
+            else:
+                continue
+            break
+
+        return arrayInfo

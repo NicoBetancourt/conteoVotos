@@ -1,19 +1,20 @@
-from frameworks.storage.database.db import get_connection
+from frameworks.storage.client.client import get_connection
 from domain.info.entreprise_bussines.entities.info_dom import Info_dom
+from frameworks.storage.models.info_model import Info_dal
 from decouple import config
 
 table_name = config('TABLE_NAME')
 
 
-class InfoModel():
+class psql_driver():
     @classmethod
-    def get_Info(self, id):
+    def get_one(self, id):
         try:
             connection = get_connection()
 
             with connection.cursor() as cursor:
                 cursor.execute(
-                    f"SELECT id, departamento,municipio,zona,mesa,link from {table_name} WHERE id = %s", (id,))
+                    f"SELECT id, departamento,municipio,zona,mesa,link from {table_name} WHERE id = %s", id)
                 row = cursor.fetchone()
                 infoData = None
 
@@ -29,7 +30,7 @@ class InfoModel():
             raise Exception(ex)
 
     @classmethod
-    def get_AllInfo(self):
+    def get_all(self):
         try:
             connection = get_connection()
             infoData = []
@@ -50,16 +51,41 @@ class InfoModel():
             raise Exception(ex)
 
     @classmethod
-    def post_Info(self, info):
+    def add_one(self, info):
         try:
             connection = get_connection()
 
             with connection.cursor() as cursor:
-                cursor.execute(
-                    f"INSERT INTO {table_name} (id, departamento,municipio,zona,mesa,link) VALUES (%s,%s,%s,%s,%s,%s)", (info.id, info.departamento, info.municipio, info.zona, info.mesa, info.link))
-            affected_rows = cursor.rowcount
-            connection.commit()
-            connection.close()
+
+                str_query = f"INSERT INTO {table_name} ("+','.join(x for x in Info_dal.headers(
+                ))+") VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+
+                cursor.execute(str_query, (info))
+
+                affected_rows = cursor.rowcount
+                connection.commit()
+                connection.close()
+
+            return affected_rows
+        except Exception as ex:
+            raise Exception(ex)
+
+    @classmethod
+    def add_all(self, info):
+        try:
+            connection = get_connection()
+
+            with connection.cursor() as cursor:
+                str_query = f"INSERT INTO {table_name} ("+','.join(x for x in Info_dal.headers(
+                ))+") VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+
+                # args_str = ','.join(cursor.mogrify("(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", x) for x in info)
+                # cursor.execute(f"INSERT INTO {table_name} VALUES " + args_str)
+
+                cursor.executemany(str_query, info)
+                affected_rows = cursor.rowcount
+                connection.commit()
+                connection.close()
 
             return affected_rows
         except Exception as ex:

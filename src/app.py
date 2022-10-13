@@ -1,9 +1,9 @@
 from flask import Flask
 from config import config
-from frameworks.storage.database.db import create_new_table
+from frameworks.storage.client.client import create_new_table
 
 # Routes
-from frameworks.web.routes import infoRoutes
+from frameworks.web.routes import info_routes
 
 app = Flask(__name__)
 
@@ -19,7 +19,7 @@ if __name__ == '__main__':
     create_new_table()
 
     # Blueprints
-    app.register_blueprint(infoRoutes.main, url_prefix='/api/info')
+    app.register_blueprint(info_routes.main, url_prefix='/api/info')
 
     # Error handlers
     app.register_error_handler(404, page_not_found)
