@@ -1,7 +1,10 @@
+import uuid
+
+
 class Info_dom():
 
-    def __init__(self, id, departamento=None, municipio=None, puesto=None, zona=None, mesa=None, link=None, votosGustavo=None, votosIvan=None, votosBlanco=None, votosNulos=None, votosNoMarcados=None, votosTotal=None, votosSufragantes=None, votosUrna=None, votosIncinerados=None, validarTotal=None, validarVotantes=None) -> None:
-        self.id = id
+    def __init__(self, id: None, departamento=None, municipio=None, puesto=None, zona=None, mesa=None, link=None, votosGustavo=None, votosIvan=None, votosBlanco=None, votosNulos=None, votosNoMarcados=None, votosTotal=None, votosSufragantes=None, votosUrna=None, votosIncinerados=None, validarTotal=None, validarVotantes=None) -> None:
+        self.id = id if id else str(uuid.uuid4())
         self.departamento = departamento
         self.municipio = municipio
         self.puesto = puesto
@@ -47,3 +50,29 @@ class Info_dom():
         return [self.id,self.departamento,self.municipio,self.puesto,self.zona,self.mesa, self.link,self.votosGustavo,self.votosIvan,
             self.votosBlanco,self.votosNulos,self.votosNoMarcados,self.votosTotal,self.votosSufragantes,self.votosUrna,self.votosIncinerados,
             self.validarTotal,self.validarVotantes]
+    
+    # def convert_json_to_Info_dom(json_data):
+    #     new_info_dom = Info_dom(
+    #         departamento=json_data['departamento'],
+    #         municipio=json_data.get('municipio'),
+    #         puesto=json_data.get('puesto'),
+    #         zona=json_data.get('zona'),
+    #         mesa=json_data.get('mesa'),
+    #         link=json_data.get('link')
+    # )
+    # return new_info_dom
+
+    
+class MakeInfo:
+
+    def __init__(self) -> None:
+        pass
+
+    def execute(self, item_dict):
+        newDom = Info_dom(item_dict)
+        return self.validateData(newDom, item_dict)
+    
+    def validateData(self, item, data):
+
+        item.id = data.id if data.id else str(uuid.uuid4())
+        return item

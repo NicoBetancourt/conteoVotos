@@ -13,15 +13,35 @@ class psql_driver():
             connection = get_connection()
 
             with connection.cursor() as cursor:
-                cursor.execute(
-                    f"SELECT id, departamento,municipio,zona,mesa,link from {table_name} WHERE id = %s", id)
+                cursor.execute("SELECT "+','.join(x for x in Info_dal.headers())+f" from {table_name} WHERE id = %s", (id,))
+                
                 row = cursor.fetchone()
                 infoData = None
 
                 if row != None:
-                    infoData = Info_dom(
-                        row[0], row[1], row[2], row[3], row[4], row[5])
+                    infoData = Info_dom(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16], row[17])
+                    # infoData = Info_dom(x for x in row)
                     infoData = infoData.to_JSON()
+
+            connection.close()
+
+            return infoData
+        except Exception as ex:
+            raise Exception(ex)
+
+    @classmethod
+    def get_one_link(self, id):
+        try:
+            connection = get_connection()
+
+            with connection.cursor() as cursor:
+                cursor.execute(f"SELECT link from {table_name} WHERE id = %s", (id,))
+                
+                row = cursor.fetchone()
+                infoData = None
+
+                if row != None:
+                    infoData = row[0]
 
             connection.close()
 
@@ -36,8 +56,7 @@ class psql_driver():
             infoData = []
 
             with connection.cursor() as cursor:
-                cursor.execute(
-                    f"SELECT id, departamento,municipio,zona,mesa,link from {table_name} ORDER BY departamento ASC")
+                cursor.execute("SELECT "+','.join(x for x in Info_dal.headers())+f" from {table_name} ORDER BY departamento ASC")
                 resultset = cursor.fetchall()
 
                 for row in resultset:

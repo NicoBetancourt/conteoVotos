@@ -66,7 +66,7 @@ class links():
 
                             arrayInfo.append(info.to_List())
 
-                            if len(arrayInfo) > 20000:
+                            if len(arrayInfo) > 2000:
                                 break
 
                         else:

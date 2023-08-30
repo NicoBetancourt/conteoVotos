@@ -15,6 +15,10 @@ class psql_operations:
         """Extract text from the currently loaded file."""
         pass
 
+    def deleteOne(self, id: str) -> dict:
+        """Extract text from the currently loaded file."""
+        pass
+
     # insertOne(item: T, collection: Collection): Promise<T>;
     # updateOne(id: string, item: T, collection: Collection): Promise<T | null>;
     # deleteOne(id: string, collection: Collection): Promise<boolean>;

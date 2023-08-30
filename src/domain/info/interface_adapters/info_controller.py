@@ -7,13 +7,23 @@ import json
 # Entities
 from domain.info.entreprise_bussines.entities.info_dom import Info_dom
 # Models
-from frameworks.storage.client.driver.driver import psql_driver
+from frameworks.storage.client.driver.driver_2 import psql_driver
 
 
 class InfoController:
     def getById(id):
         try:
             info = psql_driver.get_one(id)
+            if info != None:
+                return jsonify(info)
+            else:
+                return jsonify({}), 404
+        except Exception as ex:
+            return jsonify({'message': str(ex)}), 500
+
+    def getLinkById(id):
+        try:
+            info = psql_driver.get_one_link(id)
             if info != None:
                 return jsonify(info)
             else:
@@ -51,14 +61,13 @@ class InfoController:
         except Exception as ex:
             return jsonify({'message': str(ex)}), 500
 
-
     def postLinks():
         try:
 
             dbLinks = links.load_all_links()
             # print(dbLinks)
             affected_rows = psql_driver.add_all(dbLinks)
-            return affected_rows
+            return f"{affected_rows} links were added to DB"
 
         except Exception as ex:
             return jsonify({'message': str(ex)}), 500
