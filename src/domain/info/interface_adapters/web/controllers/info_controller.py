@@ -1,14 +1,21 @@
 from flask import jsonify, request
 from .base_controller import BaseController
-from domain.info.app_bussines_rules.use_cases import create_link, delete_links, get_link, get_all_links
+from domain.info.app_bussines_rules.use_cases import create_link, delete_links, get_link, get_all_links, update_link
 
 class InfoController(BaseController):
 
     @staticmethod
     def create():
-        json = request.json
-        response = create_link(json)
-        return response
+        try:
+            json = request.json
+            data = create_link(json)
+
+            response = {
+                "count": data,
+            }
+            return response
+        except Exception as ex:
+                    return jsonify({'Error message': str(ex)}), 500
 
     @staticmethod
     def getAll():
@@ -49,6 +56,16 @@ class InfoController(BaseController):
             return jsonify({'Error message': str(ex)}), 500
     
     @staticmethod
-    def update():
-        raise NotImplementedError()
+    def update(id):
+        try:
+            json = request.json
+            data = update_link(json, id)
+
+            response = {
+                "id": id,
+                "info": data.to_JSON(),
+            }
+            return response
+        except Exception as ex:
+                    return jsonify({'Error message': str(ex)}), 500
     

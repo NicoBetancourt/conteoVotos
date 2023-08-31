@@ -16,6 +16,10 @@ def get_one(id):
 def post_one():
     return InfoController.create()
 
+@link_route.route('/<id>/update', methods=['PUT'])
+def update(id):
+    return InfoController.update(id)
+
 @link_route.route('/', methods=['DELETE'])
 def delete():
     return InfoController.delete()

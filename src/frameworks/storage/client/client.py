@@ -65,7 +65,7 @@ def create_new_table():
                     votos_urna INT,
                     votos_incinerados SMALLINT,
                     validar_total BOOLEAN,
-                    validar_totantes BOOLEAN
+                    validar_votantes BOOLEAN
                 )
                 """
 

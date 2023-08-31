@@ -23,10 +23,12 @@ class InfoRepository(RepositoryReader):
 
     def create(self, item):
         infoDal = self.fromDomToDal(item)
-        return self.impl.create(infoDal)
+        return self.impl.create_info(infoDal)
 
-    def update(self, id: int):
-        return self.impl.update(self, id)
+    def update(self, item, id):
+        infoDal = self.fromDomToDal(item)
+        filter = f"id = '{id}'"
+        return self.impl.update_info(infoDal, filter)
 
     def delete(self, filters):
         filter = self.filterDomToDal(filters)
@@ -38,11 +40,47 @@ class InfoRepository(RepositoryReader):
         return rowsDeleted
     
     def fromDalToDom(self, itemDal):
-        dom = Info_dom(*itemDal)
+        dom = Info_dom()
+        dom.id = itemDal.id
+        dom.departamento = itemDal.departamento
+        dom.municipio = itemDal.municipio
+        dom.puesto = itemDal.puesto
+        dom.zona = itemDal.zona
+        dom.mesa = itemDal.mesa
+        dom.link = itemDal.link
+        dom.votosGustavo = itemDal.votos_gustavo
+        dom.votosIvan = itemDal.votos_ivan
+        dom.votosBlanco = itemDal.votos_blanco
+        dom.votosNulos = itemDal.votos_nulos
+        dom.votosNoMarcados = itemDal.votos_no_marcados
+        dom.votosTotal = itemDal.votos_total
+        dom.votosSufragantes = itemDal.votos_sufragantes
+        dom.votosUrna = itemDal.votos_urna
+        dom.votosIncinerados = itemDal.votos_incinerados
+        dom.validarTotal = itemDal.validar_total
+        dom.validarVotantes = itemDal.validar_votantes
         return dom
     
     def fromDomToDal(self, itemDom):
-        dal = Info_dal(*itemDom)
+        dal = Info_dal()
+        dal.id = itemDom.id
+        dal.departamento = itemDom.departamento
+        dal.municipio = itemDom.municipio
+        dal.puesto = itemDom.puesto
+        dal.zona = itemDom.zona
+        dal.mesa = itemDom.mesa
+        dal.link = itemDom.link
+        dal.votos_gustavo = itemDom.votosGustavo
+        dal.votos_ivan = itemDom.votosIvan
+        dal.votos_blanco = itemDom.votosBlanco
+        dal.votos_nulos = itemDom.votosNulos
+        dal.votos_no_marcados = itemDom.votosNoMarcados
+        dal.votos_total = itemDom.votosTotal
+        dal.votos_sufragantes = itemDom.votosSufragantes
+        dal.votos_urna = itemDom.votosUrna
+        dal.votos_incinerados = itemDom.votosIncinerados
+        dal.validar_total = itemDom.validarTotal
+        dal.validar_votantes = itemDom.validarVotantes
         return dal
     
     def filterDomToDal(self, itemArray):
