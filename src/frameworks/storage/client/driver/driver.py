@@ -76,7 +76,6 @@ class psql_driver():
     def get_all(self, table_name, condition=None):
         try:
             connection = get_connection()
-            print('Estoy corriendo dentro de get all')
             with connection.cursor() as cursor:
 
                 condition_query = f" WHERE {condition}" if condition else ""
