@@ -1,6 +1,7 @@
 from domain.info.entreprise_bussines.repository_reader import RepositoryReader
 from domain.info.entreprise_bussines.entities.info_dom import Info_dom
 from frameworks.storage.models.info_model import Info_dal
+from frameworks.utils.from_camel_to_snake import camel_to_snake
 
 class InfoRepository(RepositoryReader):
 
@@ -86,7 +87,8 @@ class InfoRepository(RepositoryReader):
     def filterDomToDal(self, itemArray):
         mapFilter = []
         for item in itemArray:
-            mapFilter.append(f"{item} LIKE '{itemArray[item]}%'")
+            if itemArray[item] is not None:
+                mapFilter.append(f"{camel_to_snake(item)} LIKE '{itemArray[item]}'")
 
         condition = ' AND '.join(mapFilter)
         return condition
