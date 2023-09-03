@@ -1,6 +1,6 @@
 from flask import jsonify, request
 from .base_controller import BaseController
-from domain.info.app_bussines_rules.use_cases import create_link, delete_links, get_link, get_all_links, update_link
+from domain.info.app_bussines_rules.use_cases import create_link, delete_links, get_link, get_all_links, update_link, load_links
 
 class InfoController(BaseController):
 
@@ -68,4 +68,20 @@ class InfoController(BaseController):
             return response
         except Exception as ex:
                     return jsonify({'Error message': str(ex)}), 500
+        
+    @staticmethod
+    def loadInfo():
+        try:
+            params = request.args
+            info_objects = load_links()
+            data = [info_obj.to_JSON() for info_obj in info_objects]
+
+            response = {
+                "data": data,
+                "count": len(data)
+            }
+
+            return response
+        except Exception as ex:
+            return jsonify({'Error message': str(ex)}), 500
     

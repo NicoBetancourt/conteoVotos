@@ -23,3 +23,7 @@ def update(id):
 @link_route.route('/', methods=['DELETE'])
 def delete():
     return InfoController.delete()
+
+@link_route.route('/load-links', methods=['POST'])
+def load_info_links():
+    return InfoController.loadInfo()
