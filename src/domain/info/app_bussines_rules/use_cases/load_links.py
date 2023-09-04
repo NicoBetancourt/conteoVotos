@@ -1,13 +1,17 @@
 import requests
 from bs4 import BeautifulSoup
-import uuid
 
 # Entities
 from domain.info.entreprise_bussines.entities.info_dom import Info_dom
+from domain.info.interface_adapters.repositories.info_repository import InfoRepository
+from frameworks.utils.clean_strings import limpiar_cadena
 
+class LoadLinks():
 
-class links():
-    def load_all_links():
+    def __init__(self, info_repo:InfoRepository):
+            self._info_repo: InfoRepository = info_repo
+
+    def execute(self):
 
         url = 'https://elecciones1.registraduria.gov.co/e14_pre2_2018/e14'
 
@@ -26,6 +30,12 @@ class links():
 
             htmlText = requests.post(url, data=body).text
             return htmlText
+        
+        def validateExistence(infoLink):
+            dictItem = infoLink.to_JSON()
+            del dictItem['id']
+            data = self._info_repo.get_all(dictItem)
+            return len(data) == 0
 
         infoDepartamento = getInfo(url, findDepartamentos, '01', '', '', '')
 
@@ -37,10 +47,10 @@ class links():
         for departamento in soupDepartamentos.findAll('a'):
             dpto = (departamento['id'][-2:]).replace('_', '0')
             infoMunicipios = getInfo(url, findMunicipios, dpto, '', '', '')
-            soupDepartamentos = BeautifulSoup(infoMunicipios, "html.parser")
+            soupMunicipios = BeautifulSoup(infoMunicipios, "html.parser")
 
             # Itera cada uno de los municipios
-            for municipio in soupDepartamentos.findAll('option'):
+            for municipio in soupMunicipios.findAll('option'):
                 mnpio = ('00'+municipio['value'])[-3:]
                 infoZonas = getInfo(url, findZonas, dpto, mnpio, '', '')
                 soupZonas = BeautifulSoup(infoZonas, "html.parser")
@@ -61,12 +71,22 @@ class links():
                         # Itera cada uno de los links
                         for link in soupLinks.findAll('a'):
 
-                            info = Info_dom(str(uuid.uuid4(
-                            )), departamento.text, municipio.text, mesa.text, zona.text, link.text, link['href'])
+                            info = {
+                                "departamento": limpiar_cadena(departamento.text),
+                                "municipio": limpiar_cadena(municipio.text),
+                                "puesto": mesa.text.strip(),
+                                "mesa": link.text.strip(),
+                                "zona": zona.text.strip(),
+                                "link": link['href'],
+                            }
 
-                            arrayInfo.append(info.to_List())
+                            infoDom = Info_dom(info)
+                            boolValidate = validateExistence(infoDom)
+                            if boolValidate:
+                                arrayInfo.append(infoDom)
+                                self._info_repo.create(infoDom)
 
-                            if len(arrayInfo) > 2000:
+                            if len(arrayInfo) > 20:
                                 break
 
                         else:
