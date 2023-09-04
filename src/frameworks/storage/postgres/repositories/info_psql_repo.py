@@ -1,5 +1,5 @@
 from domain.info.interface_adapters.repositories.info_repository import InfoRepository
-from frameworks.storage.client.driver.driver import psql_driver
+from frameworks.storage.postgres.client.driver.driver import psql_driver
 from ..models.info_model import Info_dal
 
 COLLECTION_NAME = 'infovotos';
