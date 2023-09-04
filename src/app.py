@@ -1,6 +1,6 @@
 from flask import Flask
 from config import config
-from frameworks.storage.client.client import create_new_table
+from frameworks.storage.postgres.client.client import create_new_table
 
 # Routes
 from frameworks.web.routes import link_routes

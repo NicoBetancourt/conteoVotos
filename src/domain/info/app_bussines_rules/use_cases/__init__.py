@@ -1,6 +1,6 @@
 # Repos
 from domain.info.interface_adapters.repositories.info_repository import InfoRepository
-from frameworks.storage.repositories.info_psql_repo import InfoPSQLRepository
+from frameworks.storage.postgres.repositories.info_psql_repo import InfoPSQLRepository
 
 # Uses Cases
 from domain.info.app_bussines_rules.use_cases.get_one import GetLinkById

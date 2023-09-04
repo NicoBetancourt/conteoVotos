@@ -1,7 +1,6 @@
 import psycopg2
-from frameworks.storage.client.client import get_connection
-from domain.info.entreprise_bussines.entities.info_dom import Info_dom
-from frameworks.storage.models.info_model import Info_dal
+from frameworks.storage.postgres.client.client import get_connection
+
 from decouple import config
 
 table_name = config('TABLE_NAME')

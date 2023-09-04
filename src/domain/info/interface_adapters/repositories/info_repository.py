@@ -1,6 +1,6 @@
 from domain.info.entreprise_bussines.repository_reader import RepositoryReader
 from domain.info.entreprise_bussines.entities.info_dom import Info_dom
-from frameworks.storage.models.info_model import Info_dal
+from frameworks.storage.postgres.models.info_model import Info_dal
 from frameworks.utils.from_camel_to_snake import camel_to_snake
 
 class InfoRepository(RepositoryReader):
