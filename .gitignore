@@ -10,3 +10,4 @@ pyvenv.cfg
 .env
 .vscode
 prueba.py
+.venv
